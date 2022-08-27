@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>semhelpinghands</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">semhelpinghands</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>As of now, <code>semhelpinghands</code> has four groups of functions: manipulating parameter estimates tables, comparing results from different methods, bootstrapping, and … others.</p>
+<p>This article will only introduce very briefly the groups. Some of them will be introduced in details in forthcoming article dedicated to them.</p>
+<p>Let’s load the package first, and also load <code>lavaan</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(semhelpinghands)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(lavaan)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#&gt; This is lavaan 0.6-12</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt; lavaan is FREE software! Please report any bugs.</span></span></code></pre></div>
+</div>
+<div id="manipulate-parameter-estimates-tables" class="section level1">
+<h1>Manipulate Parameter Estimates Tables</h1>
+<p>In using <code>lavaan</code>, I prefer reading the output of <code>parameterEstimates()</code>, which is compact and clear to me. I sometimes would like to organize the rows and columns in ways meaningful to a particular research questions. This can certainly be done using base R or <code>dplyr</code>. However, I am lazy and want to be able to do things using just one or two functions, with just one or two arguments.</p>
+<p>This is a sample dataset for illustration, <code>dvs_ivs</code>, with 3 predictors (<code>x1</code>, <code>x2</code>, and <code>x3</code>), 3 outcome variables (<code>y1</code> <code>y2</code>, and <code>y3</code>), and a group variable (<code>gp</code>).</p>
+<p>First a single sample model:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">data</span>(dvs_ivs)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>mod &lt;-</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="st">&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="st">y1 ~ x1 + x2 + x3</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="st">y2 ~ x1 + x3</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="st">y3 ~ y2 + x2</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="st">&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>fit &lt;-<span class="st"> </span><span class="kw">sem</span>(<span class="dt">model =</span> mod, <span class="dt">data =</span> dvs_ivs,</span>
+<span id="cb2-9"><a href="#cb2-9"></a>           <span class="dt">fixed.x =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>The parameter estimates tables:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>est &lt;-<span class="st"> </span><span class="kw">parameterEstimates</span>(fit)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>est</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt;    lhs op rhs    est    se      z pvalue ci.lower ci.upper</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; 1   y1  ~  x1  0.206 0.087  2.354  0.019    0.034    0.377</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; 2   y1  ~  x2  0.381 0.093  4.100  0.000    0.199    0.563</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt; 3   y1  ~  x3  0.162 0.088  1.852  0.064   -0.009    0.334</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; 4   y2  ~  x1  0.149 0.105  1.425  0.154   -0.056    0.354</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt; 5   y2  ~  x3  0.230 0.105  2.187  0.029    0.024    0.437</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; 6   y3  ~  y2  0.044 0.106  0.420  0.675   -0.163    0.251</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt; 7   y3  ~  x2  0.295 0.121  2.445  0.014    0.059    0.532</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt; 8   y1 ~~  y1  0.695 0.098  7.071  0.000    0.502    0.888</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt; 9   y2 ~~  y2  1.013 0.143  7.071  0.000    0.732    1.294</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt; 10  y3 ~~  y3  1.206 0.171  7.071  0.000    0.872    1.540</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt; 11  y1 ~~  y3 -0.027 0.092 -0.292  0.770   -0.206    0.153</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt; 12  x1 ~~  x1  0.926 0.131  7.071  0.000    0.669    1.183</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt; 13  x1 ~~  x2  0.118 0.088  1.339  0.180   -0.055    0.291</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt; 14  x1 ~~  x3  0.000 0.092 -0.001  0.999   -0.180    0.180</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt; 15  x2 ~~  x2  0.828 0.117  7.071  0.000    0.598    1.057</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; 16  x2 ~~  x3  0.073 0.087  0.840  0.401   -0.098    0.244</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt; 17  x3 ~~  x3  0.912 0.129  7.071  0.000    0.659    1.165</span></span></code></pre></div>
+<p>A two-sample model is also fitted to the dataset:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>fit_gp &lt;-<span class="st"> </span><span class="kw">sem</span>(<span class="dt">model =</span> mod, <span class="dt">data =</span> dvs_ivs,</span>
+<span id="cb4-2"><a href="#cb4-2"></a>              <span class="dt">group =</span> <span class="st">&quot;gp&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>              <span class="dt">fixed.x =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>This is the parameter estimates table:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>est_gp &lt;-<span class="st"> </span><span class="kw">parameterEstimates</span>(fit_gp)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>est_gp</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;    lhs op rhs block group    est    se      z pvalue ci.lower ci.upper</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; 1   y1  ~  x1     1     1  0.210 0.149  1.404  0.160   -0.083    0.502</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; 2   y1  ~  x2     1     1  0.243 0.138  1.761  0.078   -0.027    0.513</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; 3   y1  ~  x3     1     1  0.246 0.144  1.710  0.087   -0.036    0.527</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; 4   y2  ~  x1     1     1  0.036 0.179  0.199  0.842   -0.315    0.386</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; 5   y2  ~  x3     1     1  0.217 0.176  1.232  0.218   -0.128    0.561</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; 6   y3  ~  y2     1     1  0.096 0.120  0.802  0.423   -0.139    0.332</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 7   y3  ~  x2     1     1  0.372 0.135  2.754  0.006    0.107    0.637</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; 8   y1 ~~  y1     1     1  0.754 0.157  4.796  0.000    0.446    1.062</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; 9   y2 ~~  y2     1     1  1.148 0.239  4.796  0.000    0.679    1.617</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; 10  y3 ~~  y3     1     1  0.787 0.164  4.796  0.000    0.466    1.109</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; 11  y1 ~~  y3     1     1  0.010 0.114  0.085  0.932   -0.213    0.232</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; 12  x1 ~~  x1     1     1  0.798 0.166  4.796  0.000    0.472    1.125</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 13  x1 ~~  x2     1     1  0.223 0.132  1.694  0.090   -0.035    0.481</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; 14  x1 ~~  x3     1     1  0.121 0.121  1.001  0.317   -0.116    0.358</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; 15  x2 ~~  x2     1     1  0.938 0.196  4.796  0.000    0.555    1.321</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; 16  x2 ~~  x3     1     1  0.139 0.131  1.061  0.289   -0.118    0.397</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; 17  x3 ~~  x3     1     1  0.825 0.172  4.796  0.000    0.488    1.162</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt; 18  y1 ~1         1     1 -0.295 0.137 -2.148  0.032   -0.564   -0.026</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt; 19  y2 ~1         1     1  0.027 0.168  0.163  0.870   -0.302    0.357</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; 20  y3 ~1         1     1  0.233 0.131  1.775  0.076   -0.024    0.490</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt; 21  x1 ~1         1     1  0.282 0.132  2.141  0.032    0.024    0.540</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt; 22  x2 ~1         1     1 -0.067 0.143 -0.469  0.639   -0.347    0.213</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt; 23  x3 ~1         1     1 -0.123 0.134 -0.915  0.360   -0.385    0.140</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt; 24  y1  ~  x1     2     2  0.258 0.102  2.530  0.011    0.058    0.458</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#&gt; 25  y1  ~  x2     2     2  0.484 0.121  3.998  0.000    0.247    0.721</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#&gt; 26  y1  ~  x3     2     2  0.121 0.104  1.165  0.244   -0.082    0.324</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="co">#&gt; 27  y2  ~  x1     2     2  0.226 0.127  1.774  0.076   -0.024    0.475</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="co">#&gt; 28  y2  ~  x3     2     2  0.261 0.129  2.016  0.044    0.007    0.514</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#&gt; 29  y3  ~  y2     2     2 -0.003 0.162 -0.020  0.984   -0.322    0.315</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="co">#&gt; 30  y3  ~  x2     2     2  0.291 0.190  1.527  0.127   -0.082    0.664</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="co">#&gt; 31  y1 ~~  y1     2     2  0.568 0.109  5.196  0.000    0.354    0.783</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="co">#&gt; 32  y2 ~~  y2     2     2  0.882 0.170  5.196  0.000    0.549    1.214</span></span>
+<span id="cb5-36"><a href="#cb5-36"></a><span class="co">#&gt; 33  y3 ~~  y3     2     2  1.412 0.272  5.196  0.000    0.880    1.945</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="co">#&gt; 34  y1 ~~  y3     2     2  0.050 0.122  0.410  0.682   -0.189    0.289</span></span>
+<span id="cb5-38"><a href="#cb5-38"></a><span class="co">#&gt; 35  x1 ~~  x1     2     2  1.020 0.196  5.196  0.000    0.635    1.405</span></span>
+<span id="cb5-39"><a href="#cb5-39"></a><span class="co">#&gt; 36  x1 ~~  x2     2     2  0.042 0.117  0.361  0.718   -0.187    0.271</span></span>
+<span id="cb5-40"><a href="#cb5-40"></a><span class="co">#&gt; 37  x1 ~~  x3     2     2 -0.099 0.137 -0.719  0.472   -0.367    0.170</span></span>
+<span id="cb5-41"><a href="#cb5-41"></a><span class="co">#&gt; 38  x2 ~~  x2     2     2  0.722 0.139  5.196  0.000    0.450    0.994</span></span>
+<span id="cb5-42"><a href="#cb5-42"></a><span class="co">#&gt; 39  x2 ~~  x3     2     2  0.013 0.115  0.110  0.912   -0.212    0.238</span></span>
+<span id="cb5-43"><a href="#cb5-43"></a><span class="co">#&gt; 40  x3 ~~  x3     2     2  0.985 0.190  5.196  0.000    0.613    1.356</span></span>
+<span id="cb5-44"><a href="#cb5-44"></a><span class="co">#&gt; 41  y1 ~1         2     2  0.007 0.104  0.068  0.946   -0.196    0.211</span></span>
+<span id="cb5-45"><a href="#cb5-45"></a><span class="co">#&gt; 42  y2 ~1         2     2 -0.050 0.129 -0.392  0.695   -0.303    0.202</span></span>
+<span id="cb5-46"><a href="#cb5-46"></a><span class="co">#&gt; 43  y3 ~1         2     2 -0.333 0.163 -2.042  0.041   -0.652   -0.013</span></span>
+<span id="cb5-47"><a href="#cb5-47"></a><span class="co">#&gt; 44  x1 ~1         2     2  0.101 0.137  0.738  0.460   -0.168    0.371</span></span>
+<span id="cb5-48"><a href="#cb5-48"></a><span class="co">#&gt; 45  x2 ~1         2     2  0.092 0.116  0.797  0.425   -0.134    0.319</span></span>
+<span id="cb5-49"><a href="#cb5-49"></a><span class="co">#&gt; 46  x3 ~1         2     2 -0.065 0.135 -0.482  0.630   -0.330    0.200</span></span></code></pre></div>
+<p>So, these are what <code>semhelpinghands</code> has for now:</p>
+<div id="add-significance-test-results-add_sig" class="section level2">
+<h2>Add Significance Test Results: <code>add_sig()</code></h2>
+<p>Despite the controversy over null hypothesis significance testing, we still need to report them, for now. They are there, but I have to decode them mentally. Here comes <code>add_sig()</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">add_sig</span>(est)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt;    lhs op rhs    est sig    se      z pvalue ci.lower ci.upper</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; 1   y1  ~  x1  0.206 *   0.087  2.354  0.019    0.034    0.377</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; 2   y1  ~  x2  0.381 *** 0.093  4.100  0.000    0.199    0.563</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; 3   y1  ~  x3  0.162     0.088  1.852  0.064   -0.009    0.334</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt; 4   y2  ~  x1  0.149     0.105  1.425  0.154   -0.056    0.354</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; 5   y2  ~  x3  0.230 *   0.105  2.187  0.029    0.024    0.437</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; 6   y3  ~  y2  0.044     0.106  0.420  0.675   -0.163    0.251</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; 7   y3  ~  x2  0.295 *   0.121  2.445  0.014    0.059    0.532</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt; 8   y1 ~~  y1  0.695 *** 0.098  7.071  0.000    0.502    0.888</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; 9   y2 ~~  y2  1.013 *** 0.143  7.071  0.000    0.732    1.294</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; 10  y3 ~~  y3  1.206 *** 0.171  7.071  0.000    0.872    1.540</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; 11  y1 ~~  y3 -0.027     0.092 -0.292  0.770   -0.206    0.153</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; 12  x1 ~~  x1  0.926 *** 0.131  7.071  0.000    0.669    1.183</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; 13  x1 ~~  x2  0.118     0.088  1.339  0.180   -0.055    0.291</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; 14  x1 ~~  x3  0.000     0.092 -0.001  0.999   -0.180    0.180</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; 15  x2 ~~  x2  0.828 *** 0.117  7.071  0.000    0.598    1.057</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt; 16  x2 ~~  x3  0.073     0.087  0.840  0.401   -0.098    0.244</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; 17  x3 ~~  x3  0.912 *** 0.129  7.071  0.000    0.659    1.165</span></span></code></pre></div>
+<p>If bootstrapping was used, it also supports using the confidence intervals, which may yield results different from the <em>p</em>-values when bootstrapping confidence intervals are used (but same results in this example):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">add_sig</span>(est, <span class="dt">use =</span> <span class="kw">c</span>(<span class="st">&quot;pvalue&quot;</span>, <span class="st">&quot;ci&quot;</span>))</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt;    lhs op rhs    est sig  ci    se      z pvalue ci.lower ci.upper</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt; 1   y1  ~  x1  0.206 *   Sig 0.087  2.354  0.019    0.034    0.377</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; 2   y1  ~  x2  0.381 *** Sig 0.093  4.100  0.000    0.199    0.563</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt; 3   y1  ~  x3  0.162         0.088  1.852  0.064   -0.009    0.334</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt; 4   y2  ~  x1  0.149         0.105  1.425  0.154   -0.056    0.354</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; 5   y2  ~  x3  0.230 *   Sig 0.105  2.187  0.029    0.024    0.437</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; 6   y3  ~  y2  0.044         0.106  0.420  0.675   -0.163    0.251</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; 7   y3  ~  x2  0.295 *   Sig 0.121  2.445  0.014    0.059    0.532</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt; 8   y1 ~~  y1  0.695 *** Sig 0.098  7.071  0.000    0.502    0.888</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt; 9   y2 ~~  y2  1.013 *** Sig 0.143  7.071  0.000    0.732    1.294</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt; 10  y3 ~~  y3  1.206 *** Sig 0.171  7.071  0.000    0.872    1.540</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt; 11  y1 ~~  y3 -0.027         0.092 -0.292  0.770   -0.206    0.153</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt; 12  x1 ~~  x1  0.926 *** Sig 0.131  7.071  0.000    0.669    1.183</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt; 13  x1 ~~  x2  0.118         0.088  1.339  0.180   -0.055    0.291</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt; 14  x1 ~~  x3  0.000         0.092 -0.001  0.999   -0.180    0.180</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; 15  x2 ~~  x2  0.828 *** Sig 0.117  7.071  0.000    0.598    1.057</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="co">#&gt; 16  x2 ~~  x3  0.073         0.087  0.840  0.401   -0.098    0.244</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="co">#&gt; 17  x3 ~~  x3  0.912 *** Sig 0.129  7.071  0.000    0.659    1.165</span></span></code></pre></div>
+<p>It also works on the standardized solution:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>std &lt;-<span class="st"> </span><span class="kw">standardizedSolution</span>(fit)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">add_sig</span>(std)</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt;    lhs op rhs est.std sig    se      z pvalue ci.lower ci.upper</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt; 1   y1  ~  x1   0.208 *   0.087  2.394  0.017    0.038    0.378</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; 2   y1  ~  x2   0.364 *** 0.083  4.364  0.000    0.200    0.527</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; 3   y1  ~  x3   0.163     0.087  1.871  0.061   -0.008    0.333</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; 4   y2  ~  x1   0.138     0.096  1.438  0.150   -0.050    0.326</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; 5   y2  ~  x3   0.212 *   0.095  2.236  0.025    0.026    0.397</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; 6   y3  ~  y2   0.041     0.097  0.420  0.674   -0.149    0.231</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; 7   y3  ~  x2   0.237 *   0.094  2.517  0.012    0.053    0.422</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; 8   y1 ~~  y1   0.767 *** 0.074 10.369  0.000    0.622    0.912</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; 9   y2 ~~  y2   0.936 *** 0.047 19.799  0.000    0.844    1.029</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; 10  y3 ~~  y3   0.941 *** 0.046 20.649  0.000    0.852    1.031</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; 11  y1 ~~  y3  -0.029     0.100 -0.292  0.770   -0.225    0.167</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; 12  x1 ~~  x1   1.000     0.000     NA     NA    1.000    1.000</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; 13  x1 ~~  x2   0.135     0.098  1.377  0.169   -0.057    0.328</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; 14  x1 ~~  x3   0.000     0.100 -0.001  0.999   -0.196    0.196</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="co">#&gt; 15  x2 ~~  x2   1.000     0.000     NA     NA    1.000    1.000</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="co">#&gt; 16  x2 ~~  x3   0.084     0.099  0.849  0.396   -0.110    0.279</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a><span class="co">#&gt; 17  x3 ~~  x3   1.000     0.000     NA     NA    1.000    1.000</span></span></code></pre></div>
+<p>Note: But be careful about the interpretation of the <em>p</em>-values in the standardized solution, which are based on the delta method. See <code>vignette(&quot;standardizedSolution_boot_ci&quot;)</code>.</p>
+<p>See the help page of <code>add_sig()</code> for other options.</p>
+</div>
+<div id="filter-by-operators-and-some-other-columns-filter_by" class="section level2">
+<h2>Filter by Operators and Some Other Columns: <code>filter_by()</code></h2>
+<p>Its purpose is very simple, selecting rows by commonly used columns: operators (<code>op</code>), “dependent variables” (<code>lhs</code>), and “independent variables” (<code>rhs</code>).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">filter_by</span>(est, <span class="dt">op =</span> <span class="st">&quot;~&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt;   lhs op rhs   est    se     z pvalue ci.lower ci.upper</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; 1  y1  ~  x1 0.206 0.087 2.354  0.019    0.034    0.377</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; 2  y1  ~  x2 0.381 0.093 4.100  0.000    0.199    0.563</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; 3  y1  ~  x3 0.162 0.088 1.852  0.064   -0.009    0.334</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; 4  y2  ~  x1 0.149 0.105 1.425  0.154   -0.056    0.354</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; 5  y2  ~  x3 0.230 0.105 2.187  0.029    0.024    0.437</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; 6  y3  ~  y2 0.044 0.106 0.420  0.675   -0.163    0.251</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; 7  y3  ~  x2 0.295 0.121 2.445  0.014    0.059    0.532</span></span></code></pre></div>
+<p>It also supports filtering by group using group labels:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">filter_by</span>(est_gp, <span class="dt">op =</span> <span class="st">&quot;~&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;gp1&quot;</span>, <span class="dt">fit =</span> fit_gp)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt;   lhs op rhs block group   est    se     z pvalue ci.lower ci.upper</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt; 1  y1  ~  x1     1     1 0.210 0.149 1.404  0.160   -0.083    0.502</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt; 2  y1  ~  x2     1     1 0.243 0.138 1.761  0.078   -0.027    0.513</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; 3  y1  ~  x3     1     1 0.246 0.144 1.710  0.087   -0.036    0.527</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; 4  y2  ~  x1     1     1 0.036 0.179 0.199  0.842   -0.315    0.386</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt; 5  y2  ~  x3     1     1 0.217 0.176 1.232  0.218   -0.128    0.561</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt; 6  y3  ~  y2     1     1 0.096 0.120 0.802  0.423   -0.139    0.332</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; 7  y3  ~  x2     1     1 0.372 0.135 2.754  0.006    0.107    0.637</span></span></code></pre></div>
+<p>See the help page of <code>filter_by()</code> for other options.</p>
+</div>
+<div id="group-by-dvs-or-group-by-ivs-group_by_dvs-and-group_by_ivs" class="section level2">
+<h2>Group By DVs or Group By IVs: <code>group_by_dvs()</code> and <code>group_by_ivs()</code></h2>
+<p>Sometimes I want the conventional iv-column-dv-row or dv-column-iv-row format. That’s what <code>group_by_dvs()</code> and <code>group_by_ivs()</code> are for:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">group_by_dvs</span>(est)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co">#&gt;    iv est_y1 est_y2 est_y3</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co">#&gt; x1 x1  0.206  0.149     --</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#&gt; x2 x2  0.381     --  0.295</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">#&gt; x3 x3  0.162  0.230     --</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#&gt; y2 y2     --     --  0.044</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="kw">group_by_ivs</span>(est)</span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#&gt;    dv est_x1 est_x2 est_x3 est_y2</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co">#&gt; y1 y1  0.206  0.381  0.162     --</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">#&gt; y2 y2  0.149     --  0.230     --</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co">#&gt; y3 y3     --  0.295     --  0.044</span></span></code></pre></div>
+<p>They also supports extracting another column:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">group_by_dvs</span>(est, <span class="dt">col_name =</span> <span class="st">&quot;pvalue&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt;    iv pvalue_y1 pvalue_y2 pvalue_y3</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; x1 x1     0.019     0.154        --</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; x2 x2     0.000        --     0.014</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt; x3 x3     0.064     0.029        --</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt; y2 y2        --        --     0.675</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="kw">group_by_ivs</span>(est, <span class="dt">col_name =</span> <span class="st">&quot;pvalue&quot;</span>)</span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt;    dv pvalue_x1 pvalue_x2 pvalue_x3 pvalue_y2</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; y1 y1     0.019     0.000     0.064        --</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; y2 y2     0.154        --     0.029        --</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt; y3 y3        --     0.014        --     0.675</span></span></code></pre></div>
+<p>See the help page of <code>group_by_dvs()</code> and <code>group_by_ivs()</code> for other options.</p>
+</div>
+<div id="group-by-groups-group_by_groups" class="section level2">
+<h2>Group By Groups: <code>group_by_groups()</code></h2>
+<p>In multiple sample models, one common task is comparing results across groups. I wrote <code>group_by_groups()</code> for this task, to compare results side-by-side:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">group_by_groups</span>(est_gp)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">#&gt;    lhs op rhs  est_1  est_2</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co">#&gt; 1   y1  ~  x1  0.210  0.258</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co">#&gt; 2   y1  ~  x2  0.243  0.484</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">#&gt; 3   y1  ~  x3  0.246  0.121</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt; 4   y2  ~  x1  0.036  0.226</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#&gt; 5   y2  ~  x3  0.217  0.261</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co">#&gt; 6   y3  ~  x2  0.372  0.291</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co">#&gt; 7   y3  ~  y2  0.096 -0.003</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co">#&gt; 8   x1 ~~  x1  0.798  1.020</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="co">#&gt; 9   x1 ~~  x2  0.223  0.042</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="co">#&gt; 10  x1 ~~  x3  0.121 -0.099</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="co">#&gt; 11  x2 ~~  x2  0.938  0.722</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a><span class="co">#&gt; 12  x2 ~~  x3  0.139  0.013</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="co">#&gt; 13  x3 ~~  x3  0.825  0.985</span></span>
+<span id="cb13-16"><a href="#cb13-16"></a><span class="co">#&gt; 14  y1 ~~  y1  0.754  0.568</span></span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="co">#&gt; 15  y1 ~~  y3  0.010  0.050</span></span>
+<span id="cb13-18"><a href="#cb13-18"></a><span class="co">#&gt; 16  y2 ~~  y2  1.148  0.882</span></span>
+<span id="cb13-19"><a href="#cb13-19"></a><span class="co">#&gt; 17  y3 ~~  y3  0.787  1.412</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a><span class="co">#&gt; 18  x1 ~1      0.282  0.101</span></span>
+<span id="cb13-21"><a href="#cb13-21"></a><span class="co">#&gt; 19  x2 ~1     -0.067  0.092</span></span>
+<span id="cb13-22"><a href="#cb13-22"></a><span class="co">#&gt; 20  x3 ~1     -0.123 -0.065</span></span>
+<span id="cb13-23"><a href="#cb13-23"></a><span class="co">#&gt; 21  y1 ~1     -0.295  0.007</span></span>
+<span id="cb13-24"><a href="#cb13-24"></a><span class="co">#&gt; 22  y2 ~1      0.027 -0.050</span></span>
+<span id="cb13-25"><a href="#cb13-25"></a><span class="co">#&gt; 23  y3 ~1      0.233 -0.333</span></span></code></pre></div>
+<p>It also supports extracting several columns:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">group_by_groups</span>(est_gp,</span>
+<span id="cb14-2"><a href="#cb14-2"></a>                <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;est&quot;</span>, <span class="st">&quot;pvalue&quot;</span>))</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt;    lhs op rhs  est_1  est_2 pvalue_1 pvalue_2</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; 1   y1  ~  x1  0.210  0.258    0.160    0.011</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; 2   y1  ~  x2  0.243  0.484    0.078    0.000</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; 3   y1  ~  x3  0.246  0.121    0.087    0.244</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; 4   y2  ~  x1  0.036  0.226    0.842    0.076</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt; 5   y2  ~  x3  0.217  0.261    0.218    0.044</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#&gt; 6   y3  ~  x2  0.372  0.291    0.006    0.127</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co">#&gt; 7   y3  ~  y2  0.096 -0.003    0.423    0.984</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co">#&gt; 8   x1 ~~  x1  0.798  1.020    0.000    0.000</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#&gt; 9   x1 ~~  x2  0.223  0.042    0.090    0.718</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="co">#&gt; 10  x1 ~~  x3  0.121 -0.099    0.317    0.472</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a><span class="co">#&gt; 11  x2 ~~  x2  0.938  0.722    0.000    0.000</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="co">#&gt; 12  x2 ~~  x3  0.139  0.013    0.289    0.912</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="co">#&gt; 13  x3 ~~  x3  0.825  0.985    0.000    0.000</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a><span class="co">#&gt; 14  y1 ~~  y1  0.754  0.568    0.000    0.000</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a><span class="co">#&gt; 15  y1 ~~  y3  0.010  0.050    0.932    0.682</span></span>
+<span id="cb14-19"><a href="#cb14-19"></a><span class="co">#&gt; 16  y2 ~~  y2  1.148  0.882    0.000    0.000</span></span>
+<span id="cb14-20"><a href="#cb14-20"></a><span class="co">#&gt; 17  y3 ~~  y3  0.787  1.412    0.000    0.000</span></span>
+<span id="cb14-21"><a href="#cb14-21"></a><span class="co">#&gt; 18  x1 ~1      0.282  0.101    0.032    0.460</span></span>
+<span id="cb14-22"><a href="#cb14-22"></a><span class="co">#&gt; 19  x2 ~1     -0.067  0.092    0.639    0.425</span></span>
+<span id="cb14-23"><a href="#cb14-23"></a><span class="co">#&gt; 20  x3 ~1     -0.123 -0.065    0.360    0.630</span></span>
+<span id="cb14-24"><a href="#cb14-24"></a><span class="co">#&gt; 21  y1 ~1     -0.295  0.007    0.032    0.946</span></span>
+<span id="cb14-25"><a href="#cb14-25"></a><span class="co">#&gt; 22  y2 ~1      0.027 -0.050    0.870    0.695</span></span>
+<span id="cb14-26"><a href="#cb14-26"></a><span class="co">#&gt; 23  y3 ~1      0.233 -0.333    0.076    0.041</span></span></code></pre></div>
+<p>If the fit object is used, it can print group labels:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">group_by_groups</span>(fit_gp,</span>
+<span id="cb15-2"><a href="#cb15-2"></a>                <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;est&quot;</span>, <span class="st">&quot;pvalue&quot;</span>))</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co">#&gt;    lhs op rhs est_gp1 est_gp2 pvalue_gp1 pvalue_gp2</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#&gt; 1   y1  ~  x1   0.210   0.258      0.160      0.011</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#&gt; 2   y1  ~  x2   0.243   0.484      0.078      0.000</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co">#&gt; 3   y1  ~  x3   0.246   0.121      0.087      0.244</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co">#&gt; 4   y2  ~  x1   0.036   0.226      0.842      0.076</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="co">#&gt; 5   y2  ~  x3   0.217   0.261      0.218      0.044</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="co">#&gt; 6   y3  ~  x2   0.372   0.291      0.006      0.127</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt; 7   y3  ~  y2   0.096  -0.003      0.423      0.984</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt; 8   x1 ~~  x1   0.798   1.020      0.000      0.000</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; 9   x1 ~~  x2   0.223   0.042      0.090      0.718</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="co">#&gt; 10  x1 ~~  x3   0.121  -0.099      0.317      0.472</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="co">#&gt; 11  x2 ~~  x2   0.938   0.722      0.000      0.000</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt; 12  x2 ~~  x3   0.139   0.013      0.289      0.912</span></span>
+<span id="cb15-16"><a href="#cb15-16"></a><span class="co">#&gt; 13  x3 ~~  x3   0.825   0.985      0.000      0.000</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a><span class="co">#&gt; 14  y1 ~~  y1   0.754   0.568      0.000      0.000</span></span>
+<span id="cb15-18"><a href="#cb15-18"></a><span class="co">#&gt; 15  y1 ~~  y3   0.010   0.050      0.932      0.682</span></span>
+<span id="cb15-19"><a href="#cb15-19"></a><span class="co">#&gt; 16  y2 ~~  y2   1.148   0.882      0.000      0.000</span></span>
+<span id="cb15-20"><a href="#cb15-20"></a><span class="co">#&gt; 17  y3 ~~  y3   0.787   1.412      0.000      0.000</span></span>
+<span id="cb15-21"><a href="#cb15-21"></a><span class="co">#&gt; 18  x1 ~1       0.282   0.101      0.032      0.460</span></span>
+<span id="cb15-22"><a href="#cb15-22"></a><span class="co">#&gt; 19  x2 ~1      -0.067   0.092      0.639      0.425</span></span>
+<span id="cb15-23"><a href="#cb15-23"></a><span class="co">#&gt; 20  x3 ~1      -0.123  -0.065      0.360      0.630</span></span>
+<span id="cb15-24"><a href="#cb15-24"></a><span class="co">#&gt; 21  y1 ~1      -0.295   0.007      0.032      0.946</span></span>
+<span id="cb15-25"><a href="#cb15-25"></a><span class="co">#&gt; 22  y2 ~1       0.027  -0.050      0.870      0.695</span></span>
+<span id="cb15-26"><a href="#cb15-26"></a><span class="co">#&gt; 23  y3 ~1       0.233  -0.333      0.076      0.041</span></span></code></pre></div>
+<p>See the help page of <code>group_by_groups()</code> for other options.</p>
+</div>
+<div id="compare-models-group_by_models" class="section level2">
+<h2>Compare Models: <code>group_by_models()</code></h2>
+<p>This is inspired by the proposal Rönkkö proposed in a GitHub <a href="https://github.com/simsem/semTools/issues/24#issue-235172313">issue</a> for <code>semTools</code>. I want something simple for a quick overview and so I wrote <code>group_by_models()</code>.</p>
+<p>Suppose this is the other model fitted:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>mod2 &lt;-</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="st">&quot;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="st">y1 ~ x1 + x2 + x3</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="st">y2 ~ x1 + x2</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="st">y3 ~ y2 + x1</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="st">&quot;</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>fit2 &lt;-<span class="st"> </span><span class="kw">sem</span>(<span class="dt">model =</span> mod2, <span class="dt">data =</span> dvs_ivs,</span>
+<span id="cb16-8"><a href="#cb16-8"></a>           <span class="dt">fixed.x =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb16-9"><a href="#cb16-9"></a>est2 &lt;-<span class="st"> </span><span class="kw">parameterEstimates</span>(fit2)</span>
+<span id="cb16-10"><a href="#cb16-10"></a>est2</span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="co">#&gt;    lhs op rhs    est    se      z pvalue ci.lower ci.upper</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="co">#&gt; 1   y1  ~  x1  0.209 0.087  2.394  0.017    0.038    0.381</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="co">#&gt; 2   y1  ~  x2  0.387 0.093  4.171  0.000    0.205    0.569</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a><span class="co">#&gt; 3   y1  ~  x3  0.162 0.088  1.853  0.064   -0.009    0.334</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a><span class="co">#&gt; 4   y2  ~  x1  0.176 0.106  1.655  0.098   -0.032    0.384</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt; 5   y2  ~  x2 -0.209 0.112 -1.864  0.062   -0.430    0.011</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="co">#&gt; 6   y3  ~  y2  0.023 0.109  0.210  0.834   -0.190    0.236</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a><span class="co">#&gt; 7   y3  ~  x1 -0.157 0.117 -1.339  0.181   -0.388    0.073</span></span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="co">#&gt; 8   y1 ~~  y1  0.695 0.098  7.071  0.000    0.502    0.888</span></span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="co">#&gt; 9   y2 ~~  y2  1.026 0.145  7.071  0.000    0.741    1.310</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a><span class="co">#&gt; 10  y3 ~~  y3  1.254 0.177  7.071  0.000    0.906    1.601</span></span>
+<span id="cb16-22"><a href="#cb16-22"></a><span class="co">#&gt; 11  y1 ~~  y3 -0.028 0.093 -0.299  0.765   -0.211    0.155</span></span>
+<span id="cb16-23"><a href="#cb16-23"></a><span class="co">#&gt; 12  x1 ~~  x1  0.926 0.131  7.071  0.000    0.669    1.183</span></span>
+<span id="cb16-24"><a href="#cb16-24"></a><span class="co">#&gt; 13  x1 ~~  x2  0.118 0.088  1.339  0.180   -0.055    0.291</span></span>
+<span id="cb16-25"><a href="#cb16-25"></a><span class="co">#&gt; 14  x1 ~~  x3  0.000 0.092 -0.001  0.999   -0.180    0.180</span></span>
+<span id="cb16-26"><a href="#cb16-26"></a><span class="co">#&gt; 15  x2 ~~  x2  0.828 0.117  7.071  0.000    0.598    1.057</span></span>
+<span id="cb16-27"><a href="#cb16-27"></a><span class="co">#&gt; 16  x2 ~~  x3  0.073 0.087  0.840  0.401   -0.098    0.244</span></span>
+<span id="cb16-28"><a href="#cb16-28"></a><span class="co">#&gt; 17  x3 ~~  x3  0.912 0.129  7.071  0.000    0.659    1.165</span></span></code></pre></div>
+<p>These two models have no nested relationships. To compare the estimates, <code>group_by_models()</code> can be used:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">group_by_models</span>(<span class="kw">list</span>(<span class="dt">Model1 =</span> est,</span>
+<span id="cb17-2"><a href="#cb17-2"></a>                     <span class="dt">Model2 =</span> est2))</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co">#&gt;    lhs op rhs est_Model1 est_Model2</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="co">#&gt; 1   y1  ~  x1      0.206      0.209</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="co">#&gt; 2   y1  ~  x2      0.381      0.387</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="co">#&gt; 3   y1  ~  x3      0.162      0.162</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="co">#&gt; 4   y2  ~  x1      0.149      0.176</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="co">#&gt; 5   y2  ~  x2         NA     -0.209</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#&gt; 6   y2  ~  x3      0.230         NA</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="co">#&gt; 7   y3  ~  x1         NA     -0.157</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="co">#&gt; 8   y3  ~  x2      0.295         NA</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a><span class="co">#&gt; 9   y3  ~  y2      0.044      0.023</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="co">#&gt; 10  x1 ~~  x1      0.926      0.926</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="co">#&gt; 11  x1 ~~  x2      0.118      0.118</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a><span class="co">#&gt; 12  x1 ~~  x3      0.000      0.000</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a><span class="co">#&gt; 13  x2 ~~  x2      0.828      0.828</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a><span class="co">#&gt; 14  x2 ~~  x3      0.073      0.073</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a><span class="co">#&gt; 15  x3 ~~  x3      0.912      0.912</span></span>
+<span id="cb17-19"><a href="#cb17-19"></a><span class="co">#&gt; 16  y1 ~~  y1      0.695      0.695</span></span>
+<span id="cb17-20"><a href="#cb17-20"></a><span class="co">#&gt; 17  y1 ~~  y3     -0.027     -0.028</span></span>
+<span id="cb17-21"><a href="#cb17-21"></a><span class="co">#&gt; 18  y2 ~~  y2      1.013      1.026</span></span>
+<span id="cb17-22"><a href="#cb17-22"></a><span class="co">#&gt; 19  y3 ~~  y3      1.206      1.254</span></span></code></pre></div>
+<p>It can also compare several columns:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">group_by_models</span>(<span class="kw">list</span>(<span class="dt">Model1 =</span> est,</span>
+<span id="cb18-2"><a href="#cb18-2"></a>                     <span class="dt">Model2 =</span> est2),</span>
+<span id="cb18-3"><a href="#cb18-3"></a>                <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;est&quot;</span>, <span class="st">&quot;pvalue&quot;</span>))</span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="co">#&gt;    lhs op rhs est_Model1 est_Model2 pvalue_Model1 pvalue_Model2</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="co">#&gt; 1   y1  ~  x1      0.206      0.209         0.019         0.017</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co">#&gt; 2   y1  ~  x2      0.381      0.387         0.000         0.000</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co">#&gt; 3   y1  ~  x3      0.162      0.162         0.064         0.064</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="co">#&gt; 4   y2  ~  x1      0.149      0.176         0.154         0.098</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="co">#&gt; 5   y2  ~  x2         NA     -0.209            NA         0.062</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="co">#&gt; 6   y2  ~  x3      0.230         NA         0.029            NA</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a><span class="co">#&gt; 7   y3  ~  x1         NA     -0.157            NA         0.181</span></span>
+<span id="cb18-12"><a href="#cb18-12"></a><span class="co">#&gt; 8   y3  ~  x2      0.295         NA         0.014            NA</span></span>
+<span id="cb18-13"><a href="#cb18-13"></a><span class="co">#&gt; 9   y3  ~  y2      0.044      0.023         0.675         0.834</span></span>
+<span id="cb18-14"><a href="#cb18-14"></a><span class="co">#&gt; 10  x1 ~~  x1      0.926      0.926         0.000         0.000</span></span>
+<span id="cb18-15"><a href="#cb18-15"></a><span class="co">#&gt; 11  x1 ~~  x2      0.118      0.118         0.180         0.180</span></span>
+<span id="cb18-16"><a href="#cb18-16"></a><span class="co">#&gt; 12  x1 ~~  x3      0.000      0.000         0.999         0.999</span></span>
+<span id="cb18-17"><a href="#cb18-17"></a><span class="co">#&gt; 13  x2 ~~  x2      0.828      0.828         0.000         0.000</span></span>
+<span id="cb18-18"><a href="#cb18-18"></a><span class="co">#&gt; 14  x2 ~~  x3      0.073      0.073         0.401         0.401</span></span>
+<span id="cb18-19"><a href="#cb18-19"></a><span class="co">#&gt; 15  x3 ~~  x3      0.912      0.912         0.000         0.000</span></span>
+<span id="cb18-20"><a href="#cb18-20"></a><span class="co">#&gt; 16  y1 ~~  y1      0.695      0.695         0.000         0.000</span></span>
+<span id="cb18-21"><a href="#cb18-21"></a><span class="co">#&gt; 17  y1 ~~  y3     -0.027     -0.028         0.770         0.765</span></span>
+<span id="cb18-22"><a href="#cb18-22"></a><span class="co">#&gt; 18  y2 ~~  y2      1.013      1.026         0.000         0.000</span></span>
+<span id="cb18-23"><a href="#cb18-23"></a><span class="co">#&gt; 19  y3 ~~  y3      1.206      1.254         0.000         0.000</span></span></code></pre></div>
+<p>See the help page of <code>group_by_models()</code> for other options.</p>
+</div>
+<div id="sort-rows-sort_by" class="section level2">
+<h2>Sort Rows: <code>sort_by()</code></h2>
+<p>The function <code>sort_by()</code> can be used to sort rows using (a) common fields such as <code>&quot;op&quot;</code>, <code>&quot;lhs&quot;</code>, and <code>&quot;rhs&quot;</code>, (b) operators such as <code>&quot;~&quot;</code> and <code>&quot;~~&quot;</code>. It can be used on the output of some other functions that manipulate a parameter estimates table.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>out &lt;-<span class="st"> </span><span class="kw">group_by_groups</span>(est_gp,</span>
+<span id="cb19-2"><a href="#cb19-2"></a>                       <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;est&quot;</span>, <span class="st">&quot;pvalue&quot;</span>))</span>
+<span id="cb19-3"><a href="#cb19-3"></a>out &lt;-<span class="st"> </span><span class="kw">filter_by</span>(out, <span class="dt">op =</span> <span class="kw">c</span>(<span class="st">&quot;~&quot;</span>, <span class="st">&quot;~~&quot;</span>))</span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="kw">sort_by</span>(out, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;op&quot;</span>, <span class="st">&quot;rhs&quot;</span>))</span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="co">#&gt;    lhs op rhs est_1  est_2 pvalue_1 pvalue_2</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="co">#&gt; 1   y1  ~  x1 0.210  0.258    0.160    0.011</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="co">#&gt; 2   y2  ~  x1 0.036  0.226    0.842    0.076</span></span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="co">#&gt; 3   y1  ~  x2 0.243  0.484    0.078    0.000</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a><span class="co">#&gt; 4   y3  ~  x2 0.372  0.291    0.006    0.127</span></span>
+<span id="cb19-10"><a href="#cb19-10"></a><span class="co">#&gt; 5   y1  ~  x3 0.246  0.121    0.087    0.244</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a><span class="co">#&gt; 6   y2  ~  x3 0.217  0.261    0.218    0.044</span></span>
+<span id="cb19-12"><a href="#cb19-12"></a><span class="co">#&gt; 7   y3  ~  y2 0.096 -0.003    0.423    0.984</span></span>
+<span id="cb19-13"><a href="#cb19-13"></a><span class="co">#&gt; 8   x1 ~~  x1 0.798  1.020    0.000    0.000</span></span>
+<span id="cb19-14"><a href="#cb19-14"></a><span class="co">#&gt; 9   x1 ~~  x2 0.223  0.042    0.090    0.718</span></span>
+<span id="cb19-15"><a href="#cb19-15"></a><span class="co">#&gt; 10  x2 ~~  x2 0.938  0.722    0.000    0.000</span></span>
+<span id="cb19-16"><a href="#cb19-16"></a><span class="co">#&gt; 11  x1 ~~  x3 0.121 -0.099    0.317    0.472</span></span>
+<span id="cb19-17"><a href="#cb19-17"></a><span class="co">#&gt; 12  x2 ~~  x3 0.139  0.013    0.289    0.912</span></span>
+<span id="cb19-18"><a href="#cb19-18"></a><span class="co">#&gt; 13  x3 ~~  x3 0.825  0.985    0.000    0.000</span></span>
+<span id="cb19-19"><a href="#cb19-19"></a><span class="co">#&gt; 14  y1 ~~  y1 0.754  0.568    0.000    0.000</span></span>
+<span id="cb19-20"><a href="#cb19-20"></a><span class="co">#&gt; 15  y2 ~~  y2 1.148  0.882    0.000    0.000</span></span>
+<span id="cb19-21"><a href="#cb19-21"></a><span class="co">#&gt; 16  y1 ~~  y3 0.010  0.050    0.932    0.682</span></span>
+<span id="cb19-22"><a href="#cb19-22"></a><span class="co">#&gt; 17  y3 ~~  y3 0.787  1.412    0.000    0.000</span></span></code></pre></div>
+<p>Some functions, such as <code>group_by_models()</code>, will automatically call <code>sort_by()</code> to sort the results.</p>
+<p>The default order should be acceptable in most cases, but can also be customized. See the help page of <code>sort_by()</code> on customizing the order.</p>
+</div>
+<div id="piping" class="section level2">
+<h2>Piping</h2>
+<p>Though not officially supported, piping using <code>|&gt;</code> can be used with most of the functions that manipulate parameter estimates tables. For example:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>est_gp <span class="op">|</span><span class="er">&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw">add_sig</span>() <span class="op">|</span><span class="er">&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="st">  </span><span class="kw">group_by_groups</span>(<span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;est&quot;</span>, <span class="st">&quot;pvalue&quot;</span>, <span class="st">&quot;sig&quot;</span>),</span>
+<span id="cb20-4"><a href="#cb20-4"></a>                  <span class="dt">group_first =</span> <span class="ot">FALSE</span>) <span class="op">|</span><span class="er">&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="st">  </span><span class="kw">filter_by</span>(<span class="dt">op =</span> <span class="kw">c</span>(<span class="st">&quot;~&quot;</span>))</span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co">#&gt;   lhs op rhs est_1 pvalue_1 sig_1  est_2 pvalue_2 sig_2</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="co">#&gt; 1  y1  ~  x1 0.210    0.160        0.258    0.011   *  </span></span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="co">#&gt; 2  y1  ~  x2 0.243    0.078        0.484    0.000   ***</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="co">#&gt; 3  y1  ~  x3 0.246    0.087        0.121    0.244      </span></span>
+<span id="cb20-10"><a href="#cb20-10"></a><span class="co">#&gt; 4  y2  ~  x1 0.036    0.842        0.226    0.076      </span></span>
+<span id="cb20-11"><a href="#cb20-11"></a><span class="co">#&gt; 5  y2  ~  x3 0.217    0.218        0.261    0.044   *  </span></span>
+<span id="cb20-12"><a href="#cb20-12"></a><span class="co">#&gt; 6  y3  ~  x2 0.372    0.006   **   0.291    0.127      </span></span>
+<span id="cb20-13"><a href="#cb20-13"></a><span class="co">#&gt; 7  y3  ~  y2 0.096    0.423       -0.003    0.984</span></span></code></pre></div>
+</div>
+</div>
+<div id="compare-methods" class="section level1">
+<h1>Compare Methods</h1>
+<p>Though I believe the choice of the estimation method should be justified, suppose we want to assess the sensitivity of the parameter estimate results to the methods used, <code>compare_estimators()</code> can be used as a quick way to compare results from different methods.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>out &lt;-<span class="st"> </span><span class="kw">compare_estimators</span>(fit,</span>
+<span id="cb21-2"><a href="#cb21-2"></a>         <span class="dt">estimator =</span> <span class="kw">c</span>(<span class="st">&quot;ML&quot;</span>, <span class="st">&quot;GLS&quot;</span>, <span class="st">&quot;MLR&quot;</span>))</span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="kw">group_by_models</span>(out, <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;pvalue&quot;</span>))</span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="co">#&gt;    lhs op rhs se_ML se_GLS se_MLR pvalue_ML pvalue_GLS pvalue_MLR</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co">#&gt; 1   y1  ~  x1 0.087  0.094  0.067     0.019      0.028      0.002</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="co">#&gt; 2   y1  ~  x2 0.093  0.100  0.091     0.000      0.000      0.000</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="co">#&gt; 3   y1  ~  x3 0.088  0.089  0.084     0.064      0.067      0.053</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="co">#&gt; 4   y2  ~  x1 0.105  0.112  0.107     0.154      0.148      0.165</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="co">#&gt; 5   y2  ~  x3 0.105  0.107  0.123     0.029      0.028      0.061</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="co">#&gt; 6   y3  ~  x2 0.121  0.133  0.111     0.014      0.019      0.008</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="co">#&gt; 7   y3  ~  y2 0.106  0.116  0.108     0.675      0.654      0.681</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt; 8   x1 ~~  x1 0.131  0.129  0.136     0.000      0.000      0.000</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="co">#&gt; 9   x1 ~~  x2 0.088  0.090  0.077     0.180      0.202      0.122</span></span>
+<span id="cb21-14"><a href="#cb21-14"></a><span class="co">#&gt; 10  x1 ~~  x3 0.092  0.092  0.102     0.999      0.840      0.999</span></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="co">#&gt; 11  x2 ~~  x2 0.117  0.114  0.127     0.000      0.000      0.000</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a><span class="co">#&gt; 12  x2 ~~  x3 0.087  0.089  0.091     0.401      0.414      0.423</span></span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="co">#&gt; 13  x3 ~~  x3 0.129  0.131  0.111     0.000      0.000      0.000</span></span>
+<span id="cb21-18"><a href="#cb21-18"></a><span class="co">#&gt; 14  y1 ~~  y1 0.098  0.100  0.119     0.000      0.000      0.000</span></span>
+<span id="cb21-19"><a href="#cb21-19"></a><span class="co">#&gt; 15  y1 ~~  y3 0.092  0.093  0.104     0.770      0.793      0.797</span></span>
+<span id="cb21-20"><a href="#cb21-20"></a><span class="co">#&gt; 16  y2 ~~  y2 0.143  0.139  0.141     0.000      0.000      0.000</span></span>
+<span id="cb21-21"><a href="#cb21-21"></a><span class="co">#&gt; 17  y3 ~~  y3 0.171  0.167  0.171     0.000      0.000      0.000</span></span></code></pre></div>
+<p>It simply refits the models for each estimator and returns the results. They can then be treated as different “models” and processed by <code>group_by_models()</code>.</p>
+<p><code>se_ratios()</code> is a wrapper of <code>group_by_models()</code> used to compare the standard errors by different estimators in the output of <code>compare_estimators()</code>:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">se_ratios</span>(out, <span class="dt">reference =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="co">#&gt;    lhs op rhs se_ML se_GLS se_MLR ratio_ML ratio_GLS ratio_MLR</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="co">#&gt; 1   y1  ~  x1 0.087  0.094  0.067        1     1.072     0.765</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="co">#&gt; 2   y1  ~  x2 0.093  0.100  0.091        1     1.073     0.977</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="co">#&gt; 3   y1  ~  x3 0.088  0.089  0.084        1     1.013     0.958</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="co">#&gt; 4   y2  ~  x1 0.105  0.112  0.107        1     1.068     1.027</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co">#&gt; 5   y2  ~  x3 0.105  0.107  0.123        1     1.011     1.165</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="co">#&gt; 6   y3  ~  x2 0.121  0.133  0.111        1     1.101     0.918</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a><span class="co">#&gt; 7   y3  ~  y2 0.106  0.116  0.108        1     1.099     1.020</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a><span class="co">#&gt; 8   x1 ~~  x1 0.131  0.129  0.136        1     0.985     1.036</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a><span class="co">#&gt; 9   x1 ~~  x2 0.088  0.090  0.077        1     1.015     0.867</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a><span class="co">#&gt; 10  x1 ~~  x3 0.092  0.092  0.102        1     0.999     1.114</span></span>
+<span id="cb22-13"><a href="#cb22-13"></a><span class="co">#&gt; 11  x2 ~~  x2 0.117  0.114  0.127        1     0.974     1.084</span></span>
+<span id="cb22-14"><a href="#cb22-14"></a><span class="co">#&gt; 12  x2 ~~  x3 0.087  0.089  0.091        1     1.015     1.049</span></span>
+<span id="cb22-15"><a href="#cb22-15"></a><span class="co">#&gt; 13  x3 ~~  x3 0.129  0.131  0.111        1     1.012     0.859</span></span>
+<span id="cb22-16"><a href="#cb22-16"></a><span class="co">#&gt; 14  y1 ~~  y1 0.098  0.100  0.119        1     1.015     1.210</span></span>
+<span id="cb22-17"><a href="#cb22-17"></a><span class="co">#&gt; 15  y1 ~~  y3 0.092  0.093  0.104        1     1.015     1.134</span></span>
+<span id="cb22-18"><a href="#cb22-18"></a><span class="co">#&gt; 16  y2 ~~  y2 0.143  0.139  0.141        1     0.973     0.987</span></span>
+<span id="cb22-19"><a href="#cb22-19"></a><span class="co">#&gt; 17  y3 ~~  y3 0.171  0.167  0.171        1     0.979     1.005</span></span></code></pre></div>
+<p>See the help page of <code>compare_estimators()</code> for other options.</p>
+</div>
+<div id="bootstrapping" class="section level1">
+<h1>Bootstrapping</h1>
+<p>One issue with the standardized solution is the confidence intervals. They are based on the delta method even if <code>se = &quot;boot&quot;</code> is used. For indirect effects, for which bootstrap confidence intervals are commonly used, the confidence intervals for them in the standardized solution are not what usually reported other tools for mediation. There are some other powerful tools on the Internet and the [Google Group for lavaan], see <a href="https://groups.google.com/g/lavaan/c/0RSsh4M6zQg/m/I85YFAiLAAAJ">this thread</a>, to address this problem. I wrote <code>standardizedSolution_boot_ci()</code> not to replace them (it obviously can’t), but to address a very specific case I usually encounter myself: Generating the bootstrap confidence intervals for standardized estimates based on the bootstrap estimates already generated by <code>se = &quot;boot&quot;</code>.</p>
+<p>Please see <code>vignette(&quot;standardizedSolution_boot_ci&quot;)</code> for an illustration on <code>standardizedSolution_boot_ci()</code>.</p>
+</div>
+<div id="others" class="section level1">
+<h1>Others</h1>
+<div id="showing-the-options-in-a-model" class="section level2">
+<h2>Showing the Options in a Model</h2>
+<p><code>lavaan::lavaan()</code> and its wrappers suc has <code>lavaan::sem()</code> and <code>lavaan::cfa()</code> allow users to set several options using an <code>estimator</code>: <code>ML</code>, <code>GLS</code>, <code>WLSMV</code>, and others. However, it is not easy to remember what the options set for an estimator. Instead of finding them from the output of <code>summary()</code>, this function shows some of them in one table for a quick overview. This is an example:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">data</span>(dvs_ivs)</span>
+<span id="cb23-2"><a href="#cb23-2"></a>mod &lt;-</span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="st">&quot;</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="st">y1 ~ x1 + x2 + x3</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="st">y2 ~ x1 + x3</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="st">y3 ~ y2 + x2</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a><span class="st">&quot;</span></span>
+<span id="cb23-8"><a href="#cb23-8"></a>fit_default &lt;-<span class="st"> </span><span class="kw">sem</span>(<span class="dt">model =</span> mod, <span class="dt">data =</span> dvs_ivs)</span>
+<span id="cb23-9"><a href="#cb23-9"></a><span class="kw">show_more_options</span>(fit_default)</span>
+<span id="cb23-10"><a href="#cb23-10"></a><span class="co">#&gt;  Options                             Call    Actual  </span></span>
+<span id="cb23-11"><a href="#cb23-11"></a><span class="co">#&gt;  Estimator(s)                        default ML      </span></span>
+<span id="cb23-12"><a href="#cb23-12"></a><span class="co">#&gt;  Standard Error (SE)                 default standard</span></span>
+<span id="cb23-13"><a href="#cb23-13"></a><span class="co">#&gt;  Model Test Statistic(s)             default standard</span></span>
+<span id="cb23-14"><a href="#cb23-14"></a><span class="co">#&gt;  How Missing Data is Handled         default listwise</span></span>
+<span id="cb23-15"><a href="#cb23-15"></a><span class="co">#&gt;  Information Matrix (for SE)         default expected</span></span>
+<span id="cb23-16"><a href="#cb23-16"></a><span class="co">#&gt;  Information Matrix (for Model Test) default expected</span></span>
+<span id="cb23-17"><a href="#cb23-17"></a><span class="co">#&gt;  Mean Structure                      default No      </span></span>
+<span id="cb23-18"><a href="#cb23-18"></a><span class="co">#&gt;  &#39;x&#39; Fixed                           default TRUE</span></span>
+<span id="cb23-19"><a href="#cb23-19"></a>fit_MLR &lt;-<span class="st"> </span><span class="kw">sem</span>(<span class="dt">model =</span> mod, <span class="dt">data =</span> dvs_ivs, <span class="dt">estimator =</span> <span class="st">&quot;MLR&quot;</span>)</span>
+<span id="cb23-20"><a href="#cb23-20"></a><span class="kw">show_more_options</span>(fit_MLR)</span>
+<span id="cb23-21"><a href="#cb23-21"></a><span class="co">#&gt;  Options                             Call    Actual            </span></span>
+<span id="cb23-22"><a href="#cb23-22"></a><span class="co">#&gt;  Estimator(s)                        MLR     ML                </span></span>
+<span id="cb23-23"><a href="#cb23-23"></a><span class="co">#&gt;  Standard Error (SE)                 default robust.huber.white</span></span>
+<span id="cb23-24"><a href="#cb23-24"></a><span class="co">#&gt;  Model Test Statistic(s)             default yuan.bentler.mplus</span></span>
+<span id="cb23-25"><a href="#cb23-25"></a><span class="co">#&gt;  How Missing Data is Handled         default listwise          </span></span>
+<span id="cb23-26"><a href="#cb23-26"></a><span class="co">#&gt;  Information Matrix (for SE)         default observed          </span></span>
+<span id="cb23-27"><a href="#cb23-27"></a><span class="co">#&gt;  Information Matrix (for Model Test) default observed          </span></span>
+<span id="cb23-28"><a href="#cb23-28"></a><span class="co">#&gt;  Mean Structure                      default No                </span></span>
+<span id="cb23-29"><a href="#cb23-29"></a><span class="co">#&gt;  &#39;x&#39; Fixed                           default TRUE</span></span>
+<span id="cb23-30"><a href="#cb23-30"></a>fit_MLR_fiml &lt;-<span class="st"> </span><span class="kw">sem</span>(<span class="dt">model =</span> mod, <span class="dt">data =</span> dvs_ivs, <span class="dt">estimator =</span> <span class="st">&quot;MLR&quot;</span>,</span>
+<span id="cb23-31"><a href="#cb23-31"></a>               <span class="dt">missing =</span> <span class="st">&quot;fiml&quot;</span>)</span>
+<span id="cb23-32"><a href="#cb23-32"></a><span class="kw">show_more_options</span>(fit_MLR_fiml)</span>
+<span id="cb23-33"><a href="#cb23-33"></a><span class="co">#&gt;  Options                             Call    Actual            </span></span>
+<span id="cb23-34"><a href="#cb23-34"></a><span class="co">#&gt;  Estimator(s)                        MLR     ML                </span></span>
+<span id="cb23-35"><a href="#cb23-35"></a><span class="co">#&gt;  Standard Error (SE)                 default robust.huber.white</span></span>
+<span id="cb23-36"><a href="#cb23-36"></a><span class="co">#&gt;  Model Test Statistic(s)             default yuan.bentler.mplus</span></span>
+<span id="cb23-37"><a href="#cb23-37"></a><span class="co">#&gt;  How Missing Data is Handled         fiml    ml                </span></span>
+<span id="cb23-38"><a href="#cb23-38"></a><span class="co">#&gt;  Information Matrix (for SE)         default observed          </span></span>
+<span id="cb23-39"><a href="#cb23-39"></a><span class="co">#&gt;  Information Matrix (for Model Test) default observed          </span></span>
+<span id="cb23-40"><a href="#cb23-40"></a><span class="co">#&gt;  Mean Structure                      default Yes               </span></span>
+<span id="cb23-41"><a href="#cb23-41"></a><span class="co">#&gt;  &#39;x&#39; Fixed                           default TRUE</span></span></code></pre></div>
+</div>
+<div id="recoding-minimization-history" class="section level2">
+<h2>Recoding Minimization History</h2>
+<p>In structural equation modeling, closed-form solution is rare and optimization (minimization) is used to find the/a solution. Out of curiosity and teaching, I wrote a function to capture the minimization history so I can examine it or even plot the process. The function, <code>record_history()</code>, is still in early development but should work for now for common simple scenarios. Please refer the help page of <code>record_history()</code> to learn more about it.</p>
+</div>
+<div id="add-covariances-between-exogenous-variables" class="section level2">
+<h2>Add Covariances Between “Exogenous” Variables</h2>
+<p>In <code>lavaan</code>, I rarely need to manually add covariances between exogenous variables (defined in a loose sense: variables appear on the right-hand side but not on the left-hand side of <code>~</code>). However, I came into a situation in which <code>lavaan</code> will not do this (for good reasons). For example, when a covariance between a residual term and an exogenous variable is set to free. I wrote two simple functions, <code>add_exo_cov()</code> and <code>auto_exo_cov()</code>, for this purpose. Please refer to their help pages for further information.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
