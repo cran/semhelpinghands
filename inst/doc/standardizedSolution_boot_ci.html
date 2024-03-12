@@ -50,7 +50,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -366,52 +366,52 @@ estimates stored in the object.</p>
 <h1>Data and Model</h1>
 <p>A mediation model example modified from the official
 <code>lavaan</code> website is used (<a href="https://lavaan.ugent.be/tutorial/mediation.html" class="uri">https://lavaan.ugent.be/tutorial/mediation.html</a>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># X drawn from a Chi-square distribution with df = 2</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> (<span class="fu">rchisq</span>(n, <span class="at">df =</span> <span class="dv">2</span>) <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> .<span class="dv">40</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> .<span class="dv">40</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> .<span class="dv">30</span> <span class="sc">*</span> M <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> .<span class="dv">30</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> X,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Y =</span> Y,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">M =</span> M)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st"># direct effect</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">  Y ~ c*X</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st"># mediator</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">  M ~ a*X</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">  Y ~ b*M</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st"># indirect effect (a*b)</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">  ab := a*b</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st"># total effect</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">  total := c + (a*b)</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># X drawn from a Chi-square distribution with df = 2</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>X <span class="ot">&lt;-</span> (<span class="fu">rchisq</span>(n, <span class="at">df =</span> <span class="dv">2</span>) <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>M <span class="ot">&lt;-</span> .<span class="dv">40</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> .<span class="dv">40</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>Y <span class="ot">&lt;-</span> .<span class="dv">30</span> <span class="sc">*</span> M <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> .<span class="dv">30</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> X,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>                   <span class="at">Y =</span> Y,</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>                   <span class="at">M =</span> M)</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>model <span class="ot">&lt;-</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="st"># direct effect</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="st">  Y ~ c*X</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="st"># mediator</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="st">  M ~ a*X</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="st">  Y ~ b*M</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="st"># indirect effect (a*b)</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="st">  ab := a*b</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="st"># total effect</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="st">  total := c + (a*b)</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
 <p>This model is fitted with <code>se = &quot;bootstrap&quot;</code> and 5000
 replication. (Change <code>ncpus</code> to a value appropriate for the
 system running it.)</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(model,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> Data,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">bootstrap =</span> <span class="dv">5000</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">parallel =</span> <span class="st">&quot;snow&quot;</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ncpus =</span> <span class="dv">4</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">iseed =</span> <span class="dv">1234</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(model,</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>           <span class="at">data =</span> Data,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>           <span class="at">se =</span> <span class="st">&quot;bootstrap&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>           <span class="at">bootstrap =</span> <span class="dv">5000</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>           <span class="at">parallel =</span> <span class="st">&quot;snow&quot;</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>           <span class="at">ncpus =</span> <span class="dv">4</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>           <span class="at">iseed =</span> <span class="dv">1234</span>)</span></code></pre></div>
 <p>(Note that having a warning for some bootstrap runs is normal. The
 failed runs will not be used in forming the confidence intervals.)</p>
 <p>This is the standardized solution with delta-method confidence
 intervals.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardizedSolution</span>(fit)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     lhs op     rhs label est.std    se      z pvalue ci.lower ci.upper</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     Y  ~       X     c   0.054 0.118  0.461  0.645   -0.176    0.285</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     M  ~       X     a   0.370 0.098  3.768  0.000    0.178    0.563</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     Y  ~       M     b   0.255 0.097  2.622  0.009    0.064    0.446</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     Y ~~       Y         0.922 0.055 16.653  0.000    0.813    1.030</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     M ~~       M         0.863 0.073 11.866  0.000    0.720    1.006</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     X ~~       X         1.000 0.000     NA     NA    1.000    1.000</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7    ab :=     a*b    ab   0.094 0.045  2.093  0.036    0.006    0.183</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 total := c+(a*b) total   0.149 0.108  1.375  0.169   -0.063    0.361</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">standardizedSolution</span>(fit)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;     lhs op     rhs label est.std    se      z pvalue ci.lower ci.upper</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; 1     Y  ~       X     c   0.054 0.118  0.461  0.645   -0.176    0.285</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; 2     M  ~       X     a   0.370 0.098  3.768  0.000    0.178    0.563</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; 3     Y  ~       M     b   0.255 0.097  2.622  0.009    0.064    0.446</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; 4     Y ~~       Y         0.922 0.055 16.653  0.000    0.813    1.030</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 5     M ~~       M         0.863 0.073 11.866  0.000    0.720    1.006</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; 6     X ~~       X         1.000 0.000     NA     NA    1.000    1.000</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 7    ab :=     a*b    ab   0.094 0.045  2.093  0.036    0.006    0.183</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 8 total := c+(a*b) total   0.149 0.108  1.375  0.169   -0.063    0.361</span></span></code></pre></div>
 </div>
 <div id="bootstrap-percentile-cis-for-standardized-solution" class="section level1">
 <h1>Bootstrap Percentile CIs for Standardized Solution</h1>
@@ -419,27 +419,27 @@ intervals.</p>
 standardized solution, simply use
 <code>standardizedSolution_boot_ci()</code> instead of
 <code>lavaan::standardizedSolution()</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semhelpinghands)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ci_boot <span class="ot">&lt;-</span> <span class="fu">standardizedSolution_boot_ci</span>(fit)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ci_boot</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     lhs op     rhs label est.std    se      z pvalue ci.lower ci.upper</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     Y  ~       X     c   0.054 0.118  0.461  0.645   -0.176    0.285</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     M  ~       X     a   0.370 0.098  3.768  0.000    0.178    0.563</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     Y  ~       M     b   0.255 0.097  2.622  0.009    0.064    0.446</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     Y ~~       Y         0.922 0.055 16.653  0.000    0.813    1.030</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     M ~~       M         0.863 0.073 11.866  0.000    0.720    1.006</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     X ~~       X         1.000 0.000     NA     NA    1.000    1.000</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7    ab :=     a*b    ab   0.094 0.045  2.093  0.036    0.006    0.183</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 total := c+(a*b) total   0.149 0.108  1.375  0.169   -0.063    0.361</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   boot.ci.lower boot.ci.upper boot.se</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1        -0.171         0.286   0.117</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2         0.144         0.537   0.101</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3         0.061         0.443   0.097</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         0.766         0.986   0.058</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5         0.712         0.979   0.070</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6            NA            NA      NA</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7         0.016         0.202   0.047</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8        -0.048         0.362   0.106</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(semhelpinghands)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>ci_boot <span class="ot">&lt;-</span> <span class="fu">standardizedSolution_boot_ci</span>(fit)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>ci_boot</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;     lhs op     rhs label est.std    se      z pvalue ci.lower ci.upper</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 1     Y  ~       X     c   0.054 0.118  0.461  0.645   -0.176    0.285</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 2     M  ~       X     a   0.370 0.098  3.768  0.000    0.178    0.563</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 3     Y  ~       M     b   0.255 0.097  2.622  0.009    0.064    0.446</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 4     Y ~~       Y         0.922 0.055 16.653  0.000    0.813    1.030</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 5     M ~~       M         0.863 0.073 11.866  0.000    0.720    1.006</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 6     X ~~       X         1.000 0.000     NA     NA    1.000    1.000</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 7    ab :=     a*b    ab   0.094 0.045  2.093  0.036    0.006    0.183</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 8 total := c+(a*b) total   0.149 0.108  1.375  0.169   -0.063    0.361</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;   boot.ci.lower boot.ci.upper boot.se</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; 1        -0.171         0.286   0.117</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; 2         0.144         0.537   0.101</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; 3         0.061         0.443   0.097</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; 4         0.766         0.986   0.058</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; 5         0.712         0.979   0.070</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; 6            NA            NA      NA</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; 7         0.016         0.202   0.047</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; 8        -0.048         0.362   0.106</span></span></code></pre></div>
 <p>The bootstrap percentile confidence intervals are appended to the
 right of the original output of
 <code>lavaan::standardizedSolution()</code>, in columns
@@ -458,36 +458,36 @@ right.</p>
 results in a text Format similar to the summary of <code>lavaan</code>
 output. Call <code>print()</code> directly and add
 <code>output = &quot;text&quot;</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ci_boot,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">output =</span> <span class="st">&quot;text&quot;</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Standardized Estimates Only</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Standard errors                            Bootstrap</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Confidence interval                        Bootstrap</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Confidence Level                               95.0%</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Standardization Type                         std.all</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Number of requested bootstrap draws             5000</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Number of successful bootstrap draws            5000</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Regressions:</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                Standardized  Std.Err ci.lower ci.upper</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Y ~                                                 </span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     X          (c)    0.054    0.117   -0.171    0.286</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   M ~                                                 </span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     X          (a)    0.370    0.101    0.144    0.537</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Y ~                                                 </span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     M          (b)    0.255    0.097    0.061    0.443</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Variances:</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                Standardized  Std.Err ci.lower ci.upper</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    .Y                 0.922    0.058    0.766    0.986</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    .M                 0.863    0.070    0.712    0.979</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Defined Parameters:</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                Standardized  Std.Err ci.lower ci.upper</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ab                0.094    0.047    0.016    0.202</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     total             0.149    0.106   -0.048    0.362</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">print</span>(ci_boot,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>      <span class="at">output =</span> <span class="st">&quot;text&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; Standardized Estimates Only</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;   Standard errors                            Bootstrap</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt;   Confidence interval                        Bootstrap</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt;   Confidence Level                               95.0%</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;   Standardization Type                         std.all</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt;   Number of requested bootstrap draws             5000</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;   Number of successful bootstrap draws            5000</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; Regressions:</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;                Standardized  Std.Err ci.lower ci.upper</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;   Y ~                                                 </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt;     X          (c)    0.054    0.117   -0.171    0.286</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt;   M ~                                                 </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt;     X          (a)    0.370    0.101    0.144    0.537</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt;   Y ~                                                 </span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt;     M          (b)    0.255    0.097    0.061    0.443</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; Variances:</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt;                Standardized  Std.Err ci.lower ci.upper</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt;    .Y                 0.922    0.058    0.766    0.986</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt;    .M                 0.863    0.070    0.712    0.979</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt; Defined Parameters:</span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt;                Standardized  Std.Err ci.lower ci.upper</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#&gt;     ab                0.094    0.047    0.016    0.202</span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#&gt;     total             0.149    0.106   -0.048    0.362</span></span></code></pre></div>
 <p>Note that it will replace the results of <em>unstandardized</em>
 solution by those from the <em>standardized</em> solution.</p>
 <p>To print both the unstandardized and standardized results in the

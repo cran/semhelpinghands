@@ -1,3 +1,28 @@
+# semhelpinghands 0.1.10
+
+## New Features
+
+- Added `ptable_to_syntax()` for
+  converting a `lavaan` parameter
+  table to a `lavaan` model syntax.
+  (0.1.9.1 - 0.1.9.6).
+- Added `fitMeasures_by_models()`,
+  with a print method (`print.fit_by_models()`).
+  Generate a compact table of the fit
+  measures for two or more models, with
+  models as the columns. For quick
+  preview and comparison.
+  (0.1.9.12)
+
+## Others
+
+- Fixed some typos in `NEWS.md`.
+  (0.1.9.8)
+- The default of `col_names` for
+  `group_by_models()` is now
+  `"est.std"` if `use_standardizedSolution`
+  is `TRUE`. (0.1.9.11)
+
 # semhelpinghands 0.1.9
 
 ## New Features
@@ -8,7 +33,7 @@
   of the standardized solution and
   user parameters, respectively.
   Added `get_boot_est_std()`
-  and `get-boot_def()` to extract
+  and `get_boot_def()` to extract
   the computed estimates. (0.1.8.2,
   0.1.8.3, 0.1.8.5).
 - Set the class of the output of
