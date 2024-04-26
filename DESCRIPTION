@@ -1,6 +1,6 @@
 Package: semhelpinghands
 Title: Helper Functions for Structural Equation Modeling
-Version: 0.1.10
+Version: 0.1.11
 Authors@R: person(given = "Shu Fai",
            family = "Cheung",
            role = c("aut", "cre"),
@@ -25,8 +25,8 @@ Config/testthat/edition: 3
 Imports: lavaan, boot, rlang, ggplot2, ggrepel, utils
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-03-12 12:29:54 UTC; shufa
+Packaged: 2024-04-26 12:22:59 UTC; shufa
 Author: Shu Fai Cheung [aut, cre] (<https://orcid.org/0000-0002-9871-9448>)
 Maintainer: Shu Fai Cheung <shufai.cheung@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-03-12 14:10:06 UTC
+Date/Publication: 2024-04-26 12:50:03 UTC
