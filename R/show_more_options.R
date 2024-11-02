@@ -13,7 +13,7 @@
 #' (e.g., [lavaan::sem] or
 #' [lavaan::cfa()]. Most of the values
 #' are also reported in the summary of
-#' a [lavaan-class] object. This
+#' a 'lavaan'-class object. This
 #' function is used to show the values
 #' in one single table for a quick
 #' overview.
@@ -42,7 +42,7 @@
 #' differentiate it from
 #' [show_options()], originally in the
 #' `semunpack` package, which is
-#' intended for new users of [lavaan].
+#' intended for new users of `lavaan`.
 #' The code is adapted from
 #' `show_options` with more advanced
 #' options added.

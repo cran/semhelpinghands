@@ -39,7 +39,7 @@ major options in the output of
 (e.g., \link[lavaan:sem]{lavaan::sem} or
 \code{\link[lavaan:cfa]{lavaan::cfa()}}. Most of the values
 are also reported in the summary of
-a \linkS4class{lavaan} object. This
+a 'lavaan'-class object. This
 function is used to show the values
 in one single table for a quick
 overview.
@@ -69,9 +69,7 @@ It is named \code{\link[=show_more_options]{show_more_options()}} to
 differentiate it from
 \code{\link[=show_options]{show_options()}}, originally in the
 \code{semunpack} package, which is
-intended for new users of \link{lavaan}.
-The code is adapted from
-\code{show_options} with more advanced
+intended for new users of \verb{lavaan``. The code is adapted from }show_options` with more advanced
 options added.
 }
 \section{Methods (by generic)}{

@@ -1,3 +1,25 @@
+# semhelpinghands 0.1.12
+
+## New Features
+
+- `standardizedSolution_boot_ci()` now
+  support both percentile confidence
+  intervals (`"perc"`, the default) and
+  bias-corrected confidence intervals
+  (`"bc"` or `"bca.simple"`), controlled
+  by the argument `boot_ci_type`. (0.1.11.1)
+
+- Updated `plot_boot()` to support
+  the output of `standardizedSolution_boot_ci()`.
+  (0.1.11.2)
+
+## Others
+
+- Improve the error message when calling
+  `plot_boot()` with `standardize = TRUE`
+  but `store_boot_est_std()` has not been
+  called. (0.1.11.3)
+
 # semhelpinghands 0.1.11
 
 ## Minor Fixes
